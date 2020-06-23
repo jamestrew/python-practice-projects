@@ -5,7 +5,9 @@ def simpleArraySum(ar):
 
     return total
 
-ar = [1,2,3]
+
+ar = [1, 2, 3]
+
 
 def compareTriplets(a, b):
     score = [0, 0]
@@ -18,8 +20,10 @@ def compareTriplets(a, b):
             pass
     return score
 
+
 a = [17, 28, 30]
 b = [99, 16, 8]
+
 
 def aVeryBigSum(ar):
     total = 0
@@ -27,7 +31,6 @@ def aVeryBigSum(ar):
         total += num
     return total
 
-import math
 
 def diagonalDifference(arr):
     rows = len(arr)
@@ -37,6 +40,7 @@ def diagonalDifference(arr):
         l_r_sum += arr[i][i]
         r_l_sum += arr[i][rows - i - 1]
     return abs(l_r_sum - r_l_sum)
+
 
 def plusMinus(arr):
     pos = 0
@@ -51,42 +55,42 @@ def plusMinus(arr):
         else:
             zer += 1
 
-    print("%.6f" % (pos/div))
-    print("%.6f" % (neg/div))
-    print("%.6f" % (zer/div))
+    print("%.6f" % (pos / div))
+    print("%.6f" % (neg / div))
+    print("%.6f" % (zer / div))
+
 
 def staircase(n):
     for row in range(n):
         for num in range(n):
             if num < n - row - 1:
-                print(" ", end = "")
+                print(" ", end="")
             else:
-                print("#", end = "")
+                print("#", end="")
         print()
+
 
 def staircasev2(n):
     for i in range(n):
-        print(" " * (n-i-1), "#"*(i+1))
+        print(" " * (n - i - 1), "#" * (i + 1))
 
 
 def miniMaxSum(arr):
     count = len(arr)
     high = 0
     low = 0
-    for num in range(count-1):
+    for num in range(count - 1):
         arr.sort()
         low += arr[num]
-        arr.sort(reverse = True)
+        arr.sort(reverse=True)
         high += arr[num]
     print(low, high)
 
-def miniMaxSumv2(arr):
-    x = sum(arr)
-    print(x-max(arr), low-max(arr))
 
 def birthdayCakeCandles(arr):
     num = arr.count(max(arr))
     return num
+
 
 def timeConversion(s):
     if s[-2:] == "AM" and s[:2] == "12":
@@ -96,7 +100,8 @@ def timeConversion(s):
     elif s[-2:] == "PM" and s[:2] == "12":
         return s[:-2]
     else:
-        return str(int(s[:2])+12) + s[2:-2]
+        return str(int(s[:2]) + 12) + s[2:-2]
+
 
 def is_leap(year):
     leap = False
@@ -110,19 +115,19 @@ def is_leap(year):
         leap = True
     return leap
 
+
 def count_substring(string, sub_string):
     count = 0
     for i in range(len(string)):
-        print(string[i:i+len(sub_string)])
-        if string[i:i+len(sub_string)] == sub_string:
+        print(string[i:i + len(sub_string)])
+        if string[i:i + len(sub_string)] == sub_string:
             count += 1
     return count
 
-import math
 
 def getTotalX(a, b):
-    magic = 0 # counter for integers that satisfy the condition
-    temp = [] # stores all ints that satisfies the first condition
+    magic = 0  # counter for integers that satisfy the condition
+    temp = []  # stores all ints that satisfies the first condition
     a.sort()
 
     # find the LCM between a
@@ -130,24 +135,25 @@ def getTotalX(a, b):
     for i in a[1:]:
         factor = math.gcd(factor, i)
     # integer that meets first condition
-    for i in range(1, int(b[0]/factor) + 1):
+    for i in range(1, int(b[0] / factor) + 1):
         for j in a:
-            if (factor*i)%j != 0:
+            if (factor * i) % j != 0:
                 flag = False
                 break
             flag = True
         if flag:
-            temp.append(factor*i)
+            temp.append(factor * i)
     print(temp)
     # checks for int that meets second condition
     for i in temp:
         for j in b:
-            if j%i != 0:
+            if j % i != 0:
                 flag = False
             flag = True
         if flag:
             magic += 1
     print(magic)
+
 
 a = [6, 4]
 b = [11, 13, 17, 19, 23]
@@ -155,35 +161,38 @@ b = [11, 13, 17, 19, 23]
 
 grades = [73, 100, 38, 33]
 
+
 def gradingStudents(grades):
     """ Rounds grades to the nearest 5% unless the grade is less than 38 """
-    fgrades = [] # final grades
+    fgrades = []  # final grades
 
     for i in grades:
-        if i >= 38 and i%5 > 2:
-            fgrades.append(i + (5-i%5))
+        if i >= 38 and i % 5 > 2:
+            fgrades.append(i + (5 - i % 5))
         else:
             fgrades.append(i)
     return fgrades
 
 # print(gradingStudents(grades))
 
+
 def countApplesAndOranges(s, t, a, b, apples, oranges):
     """ returns number of apples and oranges landed within [s, t] """
-    aCount = 0 # number of apples within [s,t]
-    oCount = 0 # number of oranges within [s,t]
+    aCount = 0  # number of apples within [s,t]
+    oCount = 0  # number of oranges within [s,t]
 
     # finding aCount
-    for j in [a+i for i in apples]:
+    for j in [a + i for i in apples]:
         if j >= s and j <= t:
-            aCount +=1
+            aCount += 1
     print(aCount)
 
     # finding oCount
-    for j in [b+i for i in oranges]:
+    for j in [b + i for i in oranges]:
         if j >= s and j <= t:
-            oCount +=1
+            oCount += 1
     print(oCount)
+
 
 s = 7
 t = 11
@@ -193,14 +202,18 @@ apples = [-2, 2, 1]
 oranges = [5, -6]
 # countApplesAndOranges(s, t, a, b, apples, oranges)
 
+
 def kangaroo(x1, v1, x2, v2):
     """ Returns True if kangaroos will reach the same position after the same number of jumps """
 
-    if v2 == v1: return "NO"
-    jumps = (x1 - x2)/(v2 - v1)
-    if (jumps%1) == 0 and jumps > 0:
+    if v2 == v1:
+        return "NO"
+    jumps = (x1 - x2) / (v2 - v1)
+    if (jumps % 1) == 0 and jumps > 0:
         return "YES"
-    else: return "NO"
+    else:
+        return "NO"
+
 
 x1 = 0
 v1 = 3
@@ -208,6 +221,7 @@ x2 = 4
 v2 = 2
 
 # print(kangaroo(x1, v1, x2, v2))
+
 
 def breakingRecords(scores):
     """ Returns the number times min and max scores are broken respectively """
@@ -226,17 +240,18 @@ def breakingRecords(scores):
 
 # print(breakingRecords([3, 4, 21, 36, 10, 28, 35, 5, 24, 42]))
 
+
 def birthday(s, d, m):
     """ Returns the number ways to divide up a chocolate bar """
-    ans = 0 # return integer
+    ans = 0  # return integer
 
     for i in range(len(s)):
-        sub = [] # sub array such that len(sub) == m
+        sub = []  # sub array such that len(sub) == m
         j = 0
         while len(sub) < m:
-            if (i+j) == len(s):
+            if (i + j) == len(s):
                 break
-            sub.append(s[i+j])
+            sub.append(s[i + j])
             j += 1
 
         if sum(sub) == d:
@@ -249,26 +264,29 @@ def birthday(s, d, m):
 
 def birthdayv2(s, d, m):
     ans = 0
-    for i in range(len(s)-m+1):
-        if (sum(s[i:i+m])) == d:
+    for i in range(len(s) - m + 1):
+        if (sum(s[i:i + m])) == d:
             ans += 1
     return ans
 
 # print(birthdayv2([1,2,1,3,2], 3, 2))
 
+
 def divisibleSumPairs(n, k, ar):
     ans = 0
     for i in range(n):
-        for j in range(i+1, n):
-            if (ar[i]+ar[j])%k == 0:
+        for j in range(i + 1, n):
+            if (ar[i] + ar[j]) % k == 0:
                 ans += 1
     return ans
 
+
 n = 6
 k = 3
-ar = [1,3,2,6,1,2]
+ar = [1, 3, 2, 6, 1, 2]
 
 # print(divisibleSumPairs(n, k, ar))
+
 
 def migratoryBirds(arr):
     count = 0
@@ -302,65 +320,78 @@ def dayOfProgrammer(year):
 
     return ans
 
+
 def bonAppetit(bill, k, b):
     bill.pop(k)
     actual = sum(bill)
 
-    if b == actual/2:
+    if b == actual / 2:
         print("Bon Appetit")
     else:
-        print(int(b - actual/2))
+        print(int(b - actual / 2))
+
 
 def sockMerchant(n, ar):
-    import collections
     from collections import Counter
 
     ans = 0
     socks = Counter(ar)
     for k in socks:
-        ans += socks.get(k)//2
+        ans += socks.get(k) // 2
     return ans
 
 
 def pageCount(n, p):
-    return min(p//2, n//2 - p//2)
+    return min(p // 2, n // 2 - p // 2)
+
 
 def countingValleys(n, s):
-    alt = 0 # altitude below sea level
+    alt = 0  # altitude below sea level
     count = 0
     for i in s:
-        if i == "D": alt -= 1
-        else: alt += 1
+        if i == "D":
+            alt -= 1
+        else:
+            alt += 1
 
         if alt == 0 and i == "U":
             count += 1
     return count
 
+
 def getMoneySpent(keyboards, drives, b):
     options = []
     for i in keyboards:
-        options += [(i+j) for j in drives if (i+j) <= b]
+        options += [(i + j) for j in drives if (i + j) <= b]
 
-    if options == []: return -1
-    else: return max(options)
+    if options == []:
+        return -1
+    else:
+        return max(options)
 
-a = [1,2,2,3,1,2]
+
+a = [1, 2, 2, 3, 1, 2]
+
+
 def pickingNumbers(a):
     a.sort()
     n = len(a)
     ans = 0
     for i in range(n):
-        check = [a[j] for j in range(i, n) if abs(a[i]- a[j]) <= 1]
-        if len(check) > ans: ans = len(check)
+        check = [a[j] for j in range(i, n) if abs(a[i] - a[j]) <= 1]
+        if len(check) > ans:
+            ans = len(check)
     print(ans)
+
 
 def pickingNumbersv2(a):
     from collections import Counter
     c = Counter(a)
     ans = 0
-    for i in range(max(a)+1):
-        ans = max(c[i] + c[i+1], ans)
+    for i in range(max(a) + 1):
+        ans = max(c[i] + c[i + 1], ans)
     print(ans)
+
 
 def designerPdfViewer(h, word):
     st = "abcdefghijklmnopqrstuvwxyz"
@@ -370,25 +401,26 @@ def designerPdfViewer(h, word):
             if i == j:
                 height = max(h[st.index(j)], height)
 
-    return height*len(word)
+    return height * len(word)
 
 
 h = [1, 3, 1, 3, 1, 4, 1, 3, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 7]
 word = "zaba"
 
-import math
+
 def viralAdvertising(n):
     likes = ans = 2
 
-    for i in range(n-1):
+    for i in range(n - 1):
         shares = likes * 3
-        likes = math.floor(shares/2)
+        likes = math.floor(shares / 2)
         ans += likes
     return ans
 
+
 def circularArrayRotation(a, k):
     m = len(a)
-    a = a[(m-k)%m:] + a[0:(m-k)%m]
+    a = a[(m - k) % m:] + a[0:(m - k) % m]
     print(a)
 
 
@@ -404,14 +436,15 @@ def swap_case(s):
             new += ''.join(i.upper())
     print(new)
 
+
 def print_rangoliOG(size):
     dim = size * 4 - 3
     alpha = "abcdefghijklmnopqrstuvwxyz"[0:size]
     items = list(range(size))
-    items = items[:-1]+items[::-1]
+    items = items[:-1] + items[::-1]
 
     for i in items:
-        row = alpha[-(i+1):]
+        row = alpha[-(i + 1):]
         row = row[::-1] + row[1:]
         print('-'.join(row).center(dim, '-'))
 
@@ -423,15 +456,17 @@ def print_rangoli(size):
     result = []
     for i in range(n):
         pattern = "-".join(alpha[i:n])
-        pattern = pattern[::-1]+pattern[1:]
-        result.append(pattern.center(4*n-3, '-'))
-    print('\n'.join(result[::-1]+result[1:]))
+        pattern = pattern[::-1] + pattern[1:]
+        result.append(pattern.center(4 * n - 3, '-'))
+    print('\n'.join(result[::-1] + result[1:]))
+
 
 def solve(s):
     for name in s.split():
         print(name)
         s = s.replace(name, name.capitalize())
     return s
+
 
 def minion_game(string):
     vowels = "AEIOU"
@@ -452,11 +487,13 @@ def minion_game(string):
     else:
         print("Draw")
 
+
 def merge_the_tools(string, k):
     for i in range(0, len(string), k):
-        sub = string[i:i+k] # subsegment ti
+        sub = string[i:i + k]  # subsegment ti
         ans = ''.join(dict.fromkeys(sub))
         print(ans)
+
 
 def climbingLeaderboard(scores, alice):
     scores = list(dict.fromkeys(scores))
@@ -472,19 +509,20 @@ def climbingLeaderboard(scores, alice):
             new_scores.append(binSearch(scores, score, slen))
     return new_scores
 
+
 def binSearch(scores, score, slen):
     start = 0
     end = slen
 
     while True:
-        mid = start + (end-start)//2
+        mid = start + (end - start) // 2
 
         # exit conditions
         if scores[mid] == score:
-            return mid+1
-        elif scores[mid] > score and scores[mid+1] < score:
+            return mid + 1
+        elif scores[mid] > score and scores[mid + 1] < score:
             return mid + 2
-        elif scores[mid] < score and scores[mid-1] > score:
+        elif scores[mid] < score and scores[mid - 1] > score:
             return mid + 1
 
         if score < scores[mid]:
@@ -492,18 +530,21 @@ def binSearch(scores, score, slen):
         else:
             end = mid - 1
 
-scores = [100,100,50,40,40,20,10]
-alice = [5,25,50,120]
+
+scores = [100, 100, 50, 40, 40, 20, 10]
+alice = [5, 25, 50, 120]
+
 
 def permutationEquation(p):
     n = len(p)
     px = []
     py = []
-    for i in range(1, n+1):
-        px.append(p.index(i)+1)
+    for i in range(1, n + 1):
+        px.append(p.index(i) + 1)
     for j in px:
-        py.append(p.index(j)+1)
+        py.append(p.index(j) + 1)
     return py
+
 
 def jumpingOnClouds(c, k):
     i = 0
@@ -511,7 +552,7 @@ def jumpingOnClouds(c, k):
     e = 100
     while True:
         e -= 1
-        i = (i+k)%n
+        i = (i + k) % n
         print(i)
         if c[i] == 1:
             e -= 2
@@ -527,10 +568,12 @@ def appendAndDelete(s, t, k):
         k -= 1
     return "Yes" if len(t) - len(s) <= k else "No"
 
+
 def binMaxConsecutive(n):
     b = bin(n)[2:].split('0')
     l = [len(i) for i in b]
     print(max(l))
+
 
 def companyLogo():
     from collections import Counter
@@ -538,34 +581,40 @@ def companyLogo():
     c = Counter(sorted(s))
     lst = c.most_common
 
+
 def calendar():
     import calendar
-    print(calendar.TextCalendar(firstweekday = 6).formatyear(2020))
+    print(calendar.TextCalendar(firstweekday=6).formatyear(2020))
+
 
 def time_delta(t1, t2):
     from datetime import datetime
     fmt = '%a %d %b %Y %H:%M:%S %z'
-    delta = abs(datetime.strptime(t1,fmt) - datetime.strptime(t2,fmt))
+    delta = abs(datetime.strptime(t1, fmt) - datetime.strptime(t2, fmt))
     print(str(delta.total_seconds()))
 
 
 t1 = "Sat 02 May 2015 19:54:36 +0530"
 t2 = "Fri 01 May 2015 13:54:36 -0000"
 
+
 def anyOrAll(s):
-    ans_1 = [i>0 for i in s]
+    ans_1 = [i > 0 for i in s]
     ans_2 = [str(i) == str(i)[::-1] for i in s]
 
     if all(ans_1) and any(ans_2):
         print(True)
-    else: print(False)
+    else:
+        print(False)
+
 
 def fibonacci(n):
-     # return a list of fibonacci numbers
+    # return a list of fibonacci numbers
     fib = [0, 1]
     for i in range(2, n):
-        fib.append(fib[i-1] + fib[i-2])
+        fib.append(fib[i - 1] + fib[i - 2])
     return fib[:n]
+
 
 def fun(s):
     # return True if s is a valid email, else return False
@@ -588,33 +637,36 @@ def fun(s):
         print("ext", extcheck)
         return all(checks)
 
+
 def twoDArray(arr):
     sums = []
     for i in range(4):
         for j in range(4):
-            print(i,j)
-            print(arr[i][j:j+3])
-            sums.append(sum(arr[i][j:j+3]) + sum(arr[i+2][j:j+3]) + arr[i+1][j+1])
+            print(i, j)
+            print(arr[i][j:j + 3])
+            sums.append(sum(arr[i][j:j + 3]) + sum(arr[i + 2][j:j + 3]) + arr[i + 1][j + 1])
 
     print(sums)
     print(max(sums))
 
+
 arr = [
-    [1,1,1,0,0,0],
-    [0,1,0,0,0,0],
-    [1,1,1,0,0,0],
-    [0,0,2,4,4,0],
-    [0,0,0,2,0,0],
-    [0,0,1,2,4,0]]
+    [1, 1, 1, 0, 0, 0],
+    [0, 1, 0, 0, 0, 0],
+    [1, 1, 1, 0, 0, 0],
+    [0, 0, 2, 4, 4, 0],
+    [0, 0, 0, 2, 0, 0],
+    [0, 0, 1, 2, 4, 0]]
+
 
 def libraryFine(d1, m1, y1, d2, m2, y2):
     if y1 > y2:
         return 10000
     if y1 == y2:
         if m1 > m2:
-            return 500 * (m1-m2)
+            return 500 * (m1 - m2)
         elif m1 == m2 and d1 >= d2:
-            return 15 * (d1-d2)
+            return 15 * (d1 - d2)
     return 0
 
 def cutTheSticks(arr):
@@ -624,7 +676,7 @@ def cutTheSticks(arr):
     for i, l in enumerate(arr):
         print(arr)
         if l != loc:
-            print(str(len(arr)-i))
+            print(str(len(arr) - i))
             loc = l
 
 
@@ -632,23 +684,26 @@ def calculate(*scores):
     print(*scores)
     print(sum(scores))
     print(len(scores))
-    score = sum(scores)/len(scores)
+    score = sum(scores) / len(scores)
     print(score)
+
 
 def printBoard(arr):
     for row in arr:
         print(' '.join(map(str, row)))
 
+
 def magicCost(magic, s):
     cost = 0
     for i in range(3):
         for j in range(3):
-                if s[i][j] != magic[i][j]:
-                    cost += abs(s[i][j] - magic[i][j])
+            if s[i][j] != magic[i][j]:
+                cost += abs(s[i][j] - magic[i][j])
     return cost
 
+
 def formingMagicSquares():
-    magic = [[8,1,6],[3,5,7],[4,9,2]]
+    magic = [[8, 1, 6], [3, 5, 7], [4, 9, 2]]
     costs = []
 
     for i in range(4):
@@ -670,5 +725,81 @@ def formingMagicSquares():
     print(min(costs))
 
 
-magicSquare()
+def jumpingOnClouds(c):
+    jumps = 0
+    i = 0
+    while i < len(c) - 1:
+        jumps += 1
+        if i + 2 < len(c) and c[i + 2] == 1:
+            i += 1
+        else:
+            i += 2
+    return jumps
 
+
+def equalizeArray(arr):
+    from collections import Counter
+    c = Counter(arr)
+    print(c)
+    ans = 0
+    high = c.most_common(1)[0][0]
+    print(high)
+    for k, v in c.items():
+        if k == high:
+            pass
+        else:
+            ans += v
+    return ans
+
+
+def queensAttack(n, k, r_q, c_q, obstacles):
+    ans = 0
+
+    """ first, calculate # of moves without blockers """
+    left = (c_q - 1)
+    down = (r_q - 1)
+    right = (n - c_q)
+    up = (n - r_q)
+    l_d = min(left, down)
+    r_d = min(right, down)
+    l_u = min(left, up)
+    r_u = min(right, up)
+
+    """ calculates # moves with blockers """
+    for ob in obstacles:
+        if ob[0] == r_q:  # obstacle in same row
+            if ob[1] > c_q:  # right
+                right = min(right, right - (n - ob[1]) - 1)
+            else:  # left
+                left = min(left, left - ob[1])
+        elif ob[1] == c_q:  # obstacle in same col
+            if ob[0] > r_q:  # above
+                up = min(up, up - (n - ob[0]) - 1)
+            else:
+                down = min(down, down - ob[0])
+        elif abs(ob[0] - r_q) == abs(ob[1] - c_q):  # obstacle in diagonals
+            if ob[0] > r_q and ob[1] > c_q:  # up, right
+                r_u = min(r_u, (ob[0] - r_q) - 1)
+            elif ob[0] > r_q and ob[1] < c_q:  # up, left
+                l_u = min(l_u, (ob[0] - r_q) - 1)
+            elif ob[0] < r_q and ob[1] > c_q:  # down, right
+                r_d = min(r_d, (r_q - ob[0]) - 1)
+            else:  # down, left
+                l_d = min(l_d, (r_q - ob[0]) - 1)
+
+    ans = left + down + right + up + l_u + l_d + r_u + r_d
+    return ans
+
+
+def readInputs():
+    with open("test.txt", "r") as f:
+        inputs = f.readlines()
+
+    n, k = map(int, inputs[0].split())
+    r_q, c_q = map(int, inputs[1].split())
+    obstacles = []
+    for i in inputs[2:]:
+        obstacles.append(tuple(map(int, i.split())))
+
+    result = queensAttack(n, k, r_q, c_q, obstacles)
+    print(result)
