@@ -791,15 +791,37 @@ def queensAttack(n, k, r_q, c_q, obstacles):
     return ans
 
 
+def acmTeam(topic):
+    """
+    On the first line, print the maximum number of topics a 2-person team can know.
+    On the second line, print the number of ways to form a 2-person team that knows the maximum number of topics.
+    """
+    from itertools import combinations
+
+    combs = list(combinations(topic, 2))
+    scores = []
+    for comb in combs:
+        know = 0
+        for i in range(len(comb[0])):
+            if comb[0][i] == '1' or comb[1][i] == '1':
+                know += 1
+        scores.append(know)
+    arr = [max(scores), scores.count(max(scores))]
+
+    return arr
+
+
 def readInputs():
     with open("test.txt", "r") as f:
         inputs = f.readlines()
 
+    topic = []
     n, k = map(int, inputs[0].split())
-    r_q, c_q = map(int, inputs[1].split())
-    obstacles = []
-    for i in inputs[2:]:
-        obstacles.append(tuple(map(int, i.split())))
+    for i in inputs[1:]:
+        topic.append(i.strip())
 
-    result = queensAttack(n, k, r_q, c_q, obstacles)
-    print(result)
+    result = acmTeam(topic)
+    print('\n'.join(map(str, result)))
+
+
+readInputs()

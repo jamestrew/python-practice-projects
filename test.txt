@@ -1,11 +1,5 @@
-brackethighlighter ??
-git ?
-gitgutter ?
-kite
-lsp ??
-material theme ?
-predawn ?
-sidebarenhancements
-sublimerepl
-terminus
-theme - gravity ?
+4 5
+10101
+11100
+11010
+00101
