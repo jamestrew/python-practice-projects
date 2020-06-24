@@ -811,17 +811,43 @@ def acmTeam(topic):
     return arr
 
 
-def readInputs():
-    with open("test.txt", "r") as f:
+class Calculator():
+    def power(self, n, p):
+        if n < 0 or p < 0:
+            raise Exception("n and p should be non-negative")
+        else:
+            return n**p
+
+
+def biggerIsGreater(w):
+    w = list(w)
+
+    p_index = -1
+    for i in range(len(w) - 1, 0, -1):
+        if w[i] > w[i - 1]:
+            p_index = i - 1
+            p_value = w[i - 1]
+            break
+
+    if p_index < 0:
+        return "no answer"
+
+    for i in range(len(w) - 1, 0, -1):
+        if w[i] > p_value:
+            w[p_index] = w[i]
+            w[i] = p_value
+            break
+
+    ans = w[:p_index + 1] + w[len(w) - 1:p_index: -1]
+    return ''.join(ans)
+
+
+def readfiles():
+    with open("test.txt") as f:
         inputs = f.readlines()
 
-    topic = []
-    n, k = map(int, inputs[0].split())
     for i in inputs[1:]:
-        topic.append(i.strip())
-
-    result = acmTeam(topic)
-    print('\n'.join(map(str, result)))
+        print(i.rstrip() + ' --> ' + biggerIsGreater(i.rstrip()))
 
 
-readInputs()
+readfiles()
