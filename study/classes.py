@@ -11,16 +11,25 @@ class Employee:
 
         Employee.num_of_emps += 1
 
-    def __str__(self): # __str__ called when object is to be printed
+    def __str__(self):  # __str__ called when object is to be printed
         return '{} {} gets paid {}. Wow what a rich snob'.format(self.first, self.last, self.pay)
 
-    def fullname(self): # regular method. always takes the instance as the first argument
+    def fullname(self):  # regular method. always takes the instance as the first argument
         return '{} {}'.format(self.first, self.last)
 
     def apply_raise(self):
         self.pay = int(self.pay * self.raise_amount)
 
-    @classmethod # takes the class as the first argument
+    def __repr__(self):
+        return f"Employee('{self.first}', '{self.last}', '{self.pay}')"
+
+    def __add__(self, other):
+        return self.pay + other.pay
+
+    def __len__(self):
+        return len(self.fullname())
+
+    @classmethod  # takes the class as the first argument
     def set_raise_amt(cls, amount):
         cls.raise_amount = amount
 
@@ -29,7 +38,7 @@ class Employee:
         first, last, pay = emp_str.split()
         return cls(first, last, pay)
 
-    @staticmethod # doesn't pass either the instance or class automatically. similar to normal function.
+    @staticmethod  # doesn't pass either the instance or class automatically. similar to normal function.
     def is_workday(day):
         """ returns true if a given day is a workday (weekday)"""
         if day.weekday() == 5 or day.weekday() == 6:
@@ -46,7 +55,7 @@ class Developer(Employee):
 
 class Manager(Employee):
 
-    def __init__(self, first, last, pay, employees = None):
+    def __init__(self, first, last, pay, employees=None):
         super().__init__(first, last, pay)
         if employees is None:
             self.employees = []
@@ -64,6 +73,7 @@ class Manager(Employee):
     def print_emps(self):
         for emp in self.employees:
             print("manages -->", emp.fullname())
+
 
 emp_1 = Employee('James', 'Trew', 60000)
 emp_2 = Employee('Anna', 'Ishihara', 45000)
@@ -87,3 +97,5 @@ print()
 mgr_1 = Manager('Fumie', 'Ishihara', 100000, [emp_2])
 mgr_1.print_emps()
 print(mgr_1.email)
+print(emp_1 + emp_2)
+print(len(emp_1))
