@@ -1,0 +1,21 @@
+# Specify filepatterns you want git to ignore.
+
+[Dd]esktop.ini
+[Tt]humbs.db
+.DS_Store
+$RECYCLE.BIN/
+*.stackdump
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+*.sublime-settings
+*.sublime-project
+
+# pycharm byte-code
+/.idea
+/__pycache__
+*.py[cod]
+*$py.class
