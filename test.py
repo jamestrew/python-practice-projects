@@ -1,10 +1,29 @@
-dim = (3, 1.1)
-print(dim)
+class BaseClass():
+    def __init__(self):
+        self.x = 5
+
+    def printHam(self):
+        print("Ham")
 
 
-if type(dim[0]) is not int and type(dim[1]) is not int:
-    print("Wrong")
-else:
-    print("Yes")
+class InClass1(BaseClass):
+    def __init__(self):
+        super().__init__()
+        self.x = 17
 
-print(type(dim[0]))
+
+class InClass2(BaseClass):
+    def printHam(self):
+        print("Ham2")
+
+
+class subClass(InClass1, InClass2):
+    def __init__(self):
+        super().__init__()
+        self.y = 69
+
+
+t = subClass()
+
+print(t.x)
+t.printHam()

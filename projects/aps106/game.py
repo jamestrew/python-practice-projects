@@ -19,7 +19,14 @@ PLAY
 # if random generation:
 # n, m = map(int, input("Enter board dimensions (eg. 3x4 = 3 4): ").split())
 
-dim = (3, 5)
+fname = "SmallGrid.txt"
+with open(fname) as f:
+    rows = f.readlines()
 
-grid = Board(dim)
+dim = tuple(map(int, rows[0].split()))
+content = [letter for row in rows[1:] for letter in row.strip()]
+
+grid = Board(dim, content)
 print(grid)
+
+print(grid.isPossible(0, 6))

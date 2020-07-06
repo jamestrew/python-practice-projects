@@ -1,3 +1,4 @@
+import datetime
 class Employee:
 
     raise_amount = 1.04
@@ -82,7 +83,6 @@ emp_3 = Employee.from_string(s)
 print(emp_1)
 print()
 
-import datetime
 my_day = datetime.date(2020, 6, 17)
 print(Employee.is_workday(my_day))
 print()
