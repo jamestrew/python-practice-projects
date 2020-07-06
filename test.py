@@ -1,25 +1,10 @@
-import re
-
-emails = [
-    "riya@gmail.com",
-    "julia@julia.me",
-    "sjulia@gmail.com",
-    "julia@gmail.com",
-    "samantha@gmail.com",
-    "tanya@gmail.com"
-]
-
-def gmailCheck(email):
-    pattern = r"[a-z]+@gmail\.com"
-    return re.match(pattern, email)
+dim = (3, 1.1)
+print(dim)
 
 
+if type(dim[0]) is not int and type(dim[1]) is not int:
+    print("Wrong")
+else:
+    print("Yes")
 
-
-lst = []
-for email in emails:
-    if gmailCheck(email):
-        lst.append(email)
-
-for name in sorted(lst):
-    print(name[:-10])
+print(type(dim[0]))
