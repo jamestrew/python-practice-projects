@@ -32,26 +32,50 @@ class Board():
     def __getitem__(self, key):
         return self.grid[key[0] * self.ydim + key[1]]
 
-    def isPossible(self, x, y):
-        ''' check whether move is possible
-            if possible, return score, otherwise return False
-        '''
-        index = self.ydim * x + y
-        clr = self.grid[index]
+    def neighbor(self, index):
+        ''' returns an array of the neighbors indices'''
 
         leftindex = index - 1
         rightindex = index + 1
         topindex = index - self.ydim
         bottomindex = index + self.ydim
 
-        checks = [leftindex, rightindex, topindex, bottomindex]
+        checks = []
+        if index < self.size - self.ydim:  # bottom
+            checks.append(bottomindex)
+        if index >= self.ydim:  # top
+            checks.append(topindex)
+        if index not in [i for i in range(self.size) if
+                         i % self.ydim == 0]:  # left
+            checks.append(leftindex)
+        if index not in [i + self.ydim - 1 for i in range(self.size) if
+                         i % self.ydim == 0]:  # right
+            checks.append(rightindex)
+        return checks
 
-        counts = 0
+    def isPossible(self, clr, checks):
+        ''' returns True if move is possible, otherwise return False'''
         for check in checks:
             try:
                 if self.grid[check] == clr:
-                    counts += 1  # self.isPossible(check // self.ydim, check % self.ydim)
+                    return True  # self.isPossible(check // self.ydim, check % self.ydim)
             except IndexError:
                 continue
+        return False
 
-        return counts
+    def gameOver(self):
+        checks = 0
+        for i in self.size:
+            if self.isPossible(i):
+                checks += 1
+        if checks < 0:
+            return True
+        return False
+
+    def kill(self, x, y):
+        index = self.ydim * x + y
+        clr = self.grid[index]
+        if not self.isPossible(clr, self.neighbor(index)):
+            print("Move not possible")
+        else:
+            print(f"Killing all pieces with the color {clr}")

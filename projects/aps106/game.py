@@ -29,4 +29,4 @@ content = [letter for row in rows[1:] for letter in row.strip()]
 grid = Board(dim, content)
 print(grid)
 
-print(grid.isPossible(0, 6))
+grid.kill(6, 3)
