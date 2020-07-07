@@ -35,33 +35,26 @@ class Board():
     def neighbor(self, index):
         ''' returns an array of the neighbors indices'''
 
-        leftindex = index - 1
-        rightindex = index + 1
-        topindex = index - self.ydim
-        bottomindex = index + self.ydim
-
         checks = []
         if index < self.size - self.ydim:  # bottom
-            checks.append(bottomindex)
+            checks.append(index + self.ydim)
         if index >= self.ydim:  # top
-            checks.append(topindex)
+            checks.append(index - self.ydim)
         if index not in [i for i in range(self.size) if
                          i % self.ydim == 0]:  # left
-            checks.append(leftindex)
+            checks.append(index - 1)
         if index not in [i + self.ydim - 1 for i in range(self.size) if
                          i % self.ydim == 0]:  # right
-            checks.append(rightindex)
+            checks.append(index + 1)
         return checks
 
     def isPossible(self, clr, checks):
-        ''' returns True if move is possible, otherwise return False'''
+        ''' returns list of possible kills'''
+        kills = []
         for check in checks:
-            try:
-                if self.grid[check] == clr:
-                    return True  # self.isPossible(check // self.ydim, check % self.ydim)
-            except IndexError:
-                continue
-        return False
+            if self.grid[check] == clr:
+                kills.append(check)
+        return kills
 
     def gameOver(self):
         checks = 0
@@ -73,9 +66,22 @@ class Board():
         return False
 
     def kill(self, x, y):
+        score = 0
         index = self.ydim * x + y
         clr = self.grid[index]
-        if not self.isPossible(clr, self.neighbor(index)):
+        kills = self.isPossible(clr, self.neighbor(index))
+        if not kills:
             print("Move not possible")
-        else:
-            print(f"Killing all pieces with the color {clr}")
+            return
+
+        self.grid[index] = ' '
+        score += 1
+        while kills:
+            for kill in kills:
+                if self.grid[kill] != ' ':
+                    score += 1
+                    self.grid[kill] = ' '
+            newIndex = kills.pop()
+            kills.extend(self.isPossible(clr, self.neighbor(newIndex)))
+
+        print(score)

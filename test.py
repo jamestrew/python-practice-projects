@@ -1,6 +1,5 @@
-grid = [i for i in range(12)]
+grid = [3, 4]
 
-left = [i for i in range(12) if i % 4 == 0]
-right = [i + 3 for i in range(12) if i % 4 == 0]
-print(left)
-print(right)
+newgrid = [1, 2]
+grid.extend(newgrid)
+print(grid)
