@@ -85,3 +85,29 @@ class Board():
             kills.extend(self.isPossible(clr, self.neighbor(newIndex)))
 
         print(score)
+        self.collapse()
+        self.shift()
+
+    def collapse(self):
+        ''' Collapse columns with empty cells down'''
+        for i in range(self.size - 1, self.ydim - 1, -1):
+            # if current cell empty, fill it with cell above
+            if self.grid[i] == ' ':
+                self.grid[i] = self.grid[i - self.ydim]
+                self.grid[i - self.ydim] = ' '
+
+    def shift(self):
+        ''' Shift columns over to the left into a empty column'''
+
+        for i in range(self.ydim - 1):
+            col_clr = []
+            col_indices = [k + i for k in range(self.size) if k % self.ydim == 0]
+            for j in col_indices:
+                if self.grid[j] == ' ':
+                    col_clr.append(1)
+                else:
+                    col_clr.append(0)
+            if all(col_clr):
+                for j in col_indices:
+                    self.grid[j] = self.grid[j + 1]
+                    self.grid[j + 1] = ' '

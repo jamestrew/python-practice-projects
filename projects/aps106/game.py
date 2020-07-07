@@ -32,3 +32,8 @@ print()
 
 grid.kill(0, 0)
 print(grid)
+print()
+
+grid.kill(0, 2)
+print(grid)
+print()
