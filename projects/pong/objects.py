@@ -15,19 +15,24 @@ class Ball:
     def show(self, color):
         self.handle.draw.circle(self.display, color, (self.x, self.y), self.RADIUS)
 
-    def update_pos(self):
+    def update_pos(self, paddle_y, paddle_height, paddle_width):
         self.show(BGCOLOR)  # hide old ball
 
         tempx = self.x + self.vx
         tempy = self.y + self.vy
 
-        # Collision detection
+        # Collision detection with walls
         if (tempx - self.RADIUS) <= BORDER:
             self.vx *= -1
         if (tempy - self.RADIUS) <= BORDER:
             self.vy *= -1
         elif (tempy + self.RADIUS) >= (HEIGHT - BORDER):
             self.vy *= -1
+
+        # Collision detection with paddle
+        if tempy <= paddle_y + paddle_height // 2 and tempy >= paddle_y - paddle_height // 2:
+            if tempx + self.RADIUS == WIDTH - paddle_width:
+                self.vx *= -1
 
         # Update new position with collision detection
         self.x += self.vx
@@ -47,7 +52,7 @@ class Paddle:
     def show(self, color):
         self.handle.draw.rect(self.display, color, self.handle.Rect((WIDTH - self.WIDTH, self.y - self.HEIGHT // 2), (self.WIDTH, self.HEIGHT)))
 
-    def update(self):
+    def update_pos(self):
         self.show(BGCOLOR)
         self.y = self.handle.mouse.get_pos()[1]
 

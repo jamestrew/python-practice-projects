@@ -12,7 +12,7 @@ pygame.draw.rect(screen, FGCOLOR, pygame.Rect((0, HEIGHT - BORDER), (WIDTH, BORD
 
 
 # Instantiate objects
-playball = Ball(WIDTH - Ball.RADIUS, HEIGHT // 2, -VELOCITY, -VELOCITY, pygame, screen)
+playball = Ball(WIDTH - 2 * Ball.RADIUS, HEIGHT // 3, -VELOCITY, -VELOCITY, pygame, screen)
 playball.show(FGCOLOR)
 
 paddle = Paddle(HEIGHT // 2, pygame, screen)
@@ -24,7 +24,8 @@ while True:
         break
 
     pygame.display.flip()
-    playball.update_pos()
-    paddle.update()
+    playball.update_pos(paddle.y, paddle.HEIGHT, paddle.WIDTH)
+    paddle.update_pos()
+    pygame.time.wait(1)
 
 pygame.quit()
