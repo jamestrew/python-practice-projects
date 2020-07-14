@@ -98,16 +98,15 @@ class Board():
 
     def shift(self):
         ''' Shift columns over to the left into a empty column'''
-
         for i in range(self.ydim - 1):
             col_clr = []
             col_indices = [k + i for k in range(self.size) if k % self.ydim == 0]
             for j in col_indices:
                 if self.grid[j] == ' ':
-                    col_clr.append(1)
+                    col_clr.append(1)  # cell is empty
                 else:
                     col_clr.append(0)
-            if all(col_clr):
+            if all(col_clr):  # all cells in the column empty
                 for j in col_indices:
                     self.grid[j] = self.grid[j + 1]
                     self.grid[j + 1] = ' '
