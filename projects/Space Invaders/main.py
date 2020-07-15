@@ -28,6 +28,14 @@ BG = pygame.image.load(os.path.join("assets", "background-black.png"))
 BG = pygame.transform.scale(BG, (WIDTH, HEIGHT))
 
 
+class Laser:
+    def __init__(self, x, y, img):
+        self.x = x
+        self.y = y
+        self.img = img
+        self.mask = pygame.mask.from_surface(self.img)
+
+
 class Ship:
     def __init__(self, x, y, health=100):
         self.x = x
@@ -123,7 +131,7 @@ def main():
 
         if lost:
             if lost_count > FPS * 3:
-                main()
+                run = False
             else:
                 continue
 
