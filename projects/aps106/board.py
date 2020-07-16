@@ -11,14 +11,12 @@ class Board():
             raise ValueError(
                 f"Expected board dimension of 2, but found {len(dim)}."
             )
-        if type(dim[0]) is not int or type(dim[1]) is not int:
-            raise TypeError(
-                f"Expected integer dimensions."
-            )
-
-        self.xdim = dim[0]
-        self.ydim = dim[1]
-        self.size = self.xdim * self.ydim
+        try:
+            self.xdim = int(dim[0])
+            self.ydim = int(dim[1])
+            self.size = self.xdim * self.ydim
+        except ValueError:
+            raise ValueError(f"Expected int values for grid dimension. Received {type(dim[0])} and {type(dim[0])}.")
 
         if grid is None:
             self.grid = random.choices(['r', 'g', 'b', 'y'], k=self.size)
@@ -61,7 +59,7 @@ class Board():
         for i in self.size:
             if self.isPossible(i):
                 checks += 1
-        if checks < 0:
+        if checks == 0:  # no possible moves remaining
             return True
         return False
 

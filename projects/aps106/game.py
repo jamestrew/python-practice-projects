@@ -1,5 +1,5 @@
-import GUI
+from controller import Controller
 
 if __name__ == '__main__':
-    game = GUI.Game()
-    game.mainloop()
+    c = Controller()
+    c.start_GUI()

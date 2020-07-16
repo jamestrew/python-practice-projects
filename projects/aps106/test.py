@@ -19,7 +19,7 @@ PLAY
 # if random generation:
 # n, m = map(int, input("Enter board dimensions (eg. 3x4 = 3 4): ").split())
 
-fname = "test.txt"
+fname = "Grid/test.txt"
 with open(fname) as f:
     rows = f.readlines()
 
