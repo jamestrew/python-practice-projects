@@ -79,7 +79,7 @@ class Game(tk.Frame):
             self.title_frame.destroy()
             self.menu_frame.destroy()
 
-            self.play_game()
+            self.init_game()
 
         # Gamemode
         comp_play = tk.Button(self.menu_frame, text='COMPUTER', fg=BLACK,
@@ -113,7 +113,7 @@ class Game(tk.Frame):
         play_button.config(state="disabled")
         play_button.grid(row=3, column=2, padx=5, pady=5)
 
-    def play_game(self):
+    def init_game(self):
         """
         Create base frame/canvas that modular in size. Max size fits 36x36 grid.
         (Main frame: width=WIDTH, height=HEIGHT) --> 20x20 for cells
@@ -122,32 +122,63 @@ class Game(tk.Frame):
         Each color represented by cells of varying color. No border/padding.
         """
 
-        self.xdim, self.ydim = self.controller.grid_dim()
-        cell_dim = min(WIDTH // self.xdim, HEIGHT // self.ydim)
-
-        game_frame = tk.Frame(self, bg=BACK, width=WIDTH, height=HEIGHT, bd=5)
-        game_frame.grid(row=0, column=1, stick='nsew')
-        game_frame.grid_propagate(False)
+        self.game_frame = tk.Frame(self, bg=BACK, width=WIDTH, height=HEIGHT, bd=5)
+        self.game_frame.grid(row=0, column=1, stick='nsew')
+        self.game_frame.grid_propagate(False)
         score_frame = tk.Frame(self, bg=BACK, bd=5)
         score_frame.grid(row=0, column=0, sticky='nsew')
 
-        score = tk.Label(score_frame, text="SCORE:", font=FONTS[30])
-        score.pack()
+        score_header = tk.Label(score_frame, text="SCORE:", font=FONTS[30])
+        score_header.pack()
+
+        self.xdim, self.ydim = self.controller.grid_dim()
+        self.cell_dim = min(WIDTH // self.xdim, HEIGHT // self.ydim)
 
         self.cells = []
         for i in range(self.xdim):
             row = []
             for j in range(self.ydim):
-                if self.board[i, j] == 'r':
-                    cell_clr = RED
-                if self.board[i, j] == 'g':
-                    cell_clr = GREEN
-                if self.board[i, j] == 'b':
-                    cell_clr = BLUE
-                if self.board[i, j] == 'y':
-                    cell_clr = YELLOW
-                cell_frame = tk.Frame(game_frame, width=cell_dim, height=cell_dim, bg=cell_clr)
+                cell_clr = self.check_clr(i, j)
+                cell_frame = tk.Frame(self.game_frame, width=self.cell_dim, height=self.cell_dim, bg=cell_clr)
                 cell_frame.grid(row=i, column=j)
                 cell_data = {"frame": cell_frame}
                 row.append(cell_data)
             self.cells.append(row)
+
+        self.play_game()
+
+    def check_clr(self, i, j):
+        if self.board[i, j] == 'r':
+            return RED
+        elif self.board[i, j] == 'g':
+            return GREEN
+        elif self.board[i, j] == 'b':
+            return BLUE
+        elif self.board[i, j] == 'y':
+            return YELLOW
+        else:
+            return WHITE
+
+    def play_game(self):
+        self.master.bind("<Button-1>", self.kill_cell)
+        self.__selection = None
+
+    def kill_cell(self, event):
+        ''' Get select widget, kill selected cell '''
+        widgetlen = len(str(event.widget))
+        if widgetlen < 20:
+            return
+
+        cell_index = str(event.widget)[21:]
+        if not cell_index:
+            self.__selection = (0, 0)
+        else:
+            cell_index = int(cell_index) - 1
+            self.__selection = (cell_index // self.xdim, cell_index % self.ydim)
+
+        self.board = self.controller.update_cell(self.__selection)
+
+        for i in range(self.xdim):
+            for j in range(self.ydim):
+                cell_clr = self.check_clr(i, j)
+                self.cells[i][j]["frame"].config(bg=cell_clr)

@@ -85,6 +85,7 @@ class Board():
         print(score)
         self.collapse()
         self.shift()
+        print(self)
 
     def collapse(self):
         ''' Collapse columns with empty cells down'''

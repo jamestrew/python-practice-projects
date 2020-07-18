@@ -35,3 +35,8 @@ class Controller:
 
     def grid_dim(self):
         return (self.__grid.xdim, self.__grid.ydim)
+
+    def update_cell(self, dim):
+        x, y = dim
+        self.__grid.kill(x, y)
+        return self.__grid

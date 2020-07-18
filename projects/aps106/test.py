@@ -19,7 +19,7 @@ PLAY
 # if random generation:
 # n, m = map(int, input("Enter board dimensions (eg. 3x4 = 3 4): ").split())
 
-fname = "Grid/test.txt"
+fname = "Grid/SmallGrid.txt"
 with open(fname) as f:
     rows = f.readlines()
 
@@ -30,10 +30,6 @@ grid = Board(dim, content)
 print(grid)
 print()
 
-grid.kill(0, 0)
-print(grid)
-print()
-
-grid.kill(0, 2)
+grid.kill(7, 0)
 print(grid)
 print()
