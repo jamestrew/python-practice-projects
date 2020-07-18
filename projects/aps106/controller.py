@@ -31,6 +31,7 @@ class Controller:
         self.__grid = Board(self.__grid_dim, content)
         print(self.__grid.xdim, self.__grid.ydim)
         print(self.__grid)
+        return self.__grid
 
     def grid_dim(self):
         return (self.__grid.xdim, self.__grid.ydim)

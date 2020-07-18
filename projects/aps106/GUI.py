@@ -13,7 +13,7 @@ class Game(tk.Frame):
         super().__init__()
         self.controller = controller
         self.pack()
-        self.config(width=1024, height=786)
+        self.config(width=WIDTH, height=HEIGHT)
         self.grid_propagate(False)
         self.master.title("Check Out Line")
 
@@ -74,7 +74,7 @@ class Game(tk.Frame):
 
         def start_game():
             self.controller.init_mode(self.__mode)
-            self.controller.init_grid(self.__grid_val)
+            self.board = self.controller.init_grid(self.__grid_val)
 
             self.title_frame.destroy()
             self.menu_frame.destroy()
@@ -116,18 +116,38 @@ class Game(tk.Frame):
     def play_game(self):
         """
         Create base frame/canvas that modular in size. Max size fits 36x36 grid.
-        (Main frame: width=1024, height=786) --> 20x20 for cells
+        (Main frame: width=WIDTH, height=HEIGHT) --> 20x20 for cells
         Have space for score.
 
         Each color represented by cells of varying color. No border/padding.
         """
 
         self.xdim, self.ydim = self.controller.grid_dim()
+        cell_dim = min(WIDTH // self.xdim, HEIGHT // self.ydim)
 
-        game_frame = tk.Frame(self, bg=BACK)
-        game_frame.grid(column=0, stick='nsew')
-        score_frame = tk.Frame(game_frame, bg=CONF)
-        score_frame.grid(column=1, sticky='nsew')
+        game_frame = tk.Frame(self, bg=BACK, width=WIDTH, height=HEIGHT, bd=5)
+        game_frame.grid(row=0, column=1, stick='nsew')
+        game_frame.grid_propagate(False)
+        score_frame = tk.Frame(self, bg=BACK, bd=5)
+        score_frame.grid(row=0, column=0, sticky='nsew')
 
-        score = tk.Label(score_frame, text="SCORE:", font=FONTS[55])
+        score = tk.Label(score_frame, text="SCORE:", font=FONTS[30])
         score.pack()
+
+        self.cells = []
+        for i in range(self.xdim):
+            row = []
+            for j in range(self.ydim):
+                if self.board[i, j] == 'r':
+                    cell_clr = RED
+                if self.board[i, j] == 'g':
+                    cell_clr = GREEN
+                if self.board[i, j] == 'b':
+                    cell_clr = BLUE
+                if self.board[i, j] == 'y':
+                    cell_clr = YELLOW
+                cell_frame = tk.Frame(game_frame, width=cell_dim, height=cell_dim, bg=cell_clr)
+                cell_frame.grid(row=i, column=j)
+                cell_data = {"frame": cell_frame}
+                row.append(cell_data)
+            self.cells.append(row)

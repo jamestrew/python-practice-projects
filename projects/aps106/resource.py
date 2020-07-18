@@ -13,3 +13,14 @@ FONTS = {
     25: ("Helvetica", "25", "bold"),
     20: ("Helvetica", "20", "bold"),
 }
+
+
+WIDTH = 1024
+HEIGHT = 768
+
+
+# Cell colors
+RED = "#CB4335"
+GREEN = "#229954"
+BLUE = "#21618C"
+YELLOW = "#F7DC6F"
