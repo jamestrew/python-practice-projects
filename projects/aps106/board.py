@@ -110,18 +110,17 @@ class Board():
 
     def shift(self):
         ''' Shift columns over to the left into a empty column'''
-        for i in range(self.ydim):
-            col_clr = []
+        for i in range(self.ydim - 1):
             col_indices = [k + i for k in range(self.size) if k % self.ydim == 0]
-            for j in col_indices:
-                if self.grid[j] == ' ':
-                    col_clr.append(1)  # cell is empty
-                else:
-                    col_clr.append(0)
-            if all(col_clr):  # all cells in the column empty
+            col_clr = [self.grid[j] for j in col_indices if self.grid[j] == ' ']
+            if len(col_clr) == self.xdim:  # all cells in the column empty
                 for j in col_indices:
                     self.grid[j] = self.grid[j + 1]
                     self.grid[j + 1] = ' '
+
+        for i in range(self.size - self.ydim, self.size - 1, 1):
+            if self.grid[i] == ' ' and self.grid[i + 1] != ' ':
+                self.shift()
 
     @property
     def total_score(self):

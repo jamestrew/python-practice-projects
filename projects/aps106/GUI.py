@@ -183,7 +183,6 @@ class Game(tk.Frame):
         ''' Get select widget, kill selected cell '''
 
         widget = str(event.widget)
-        print(widget, widget[:21])
         if widget[:21] != ".!game.!frame3.!frame":
             return
 

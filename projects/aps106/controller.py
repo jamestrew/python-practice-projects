@@ -38,12 +38,14 @@ class Controller:
 
     def update_cell(self, dim):
         x, y = dim
+        clr = self.__grid[x, y]
+        print(x, y, clr)
         self.__grid.kill(x, y)
-        self.log_moves(x, y)
+        self.log_moves(x, y, clr)
         return self.__grid.total_score
 
-    def log_moves(self, x, y):
+    def log_moves(self, x, y, clr):
         with open("move_log.txt", "a") as f:
-            print(f"{x} {y} {self.__grid[x, y]}", file=f)
+            print(f"{x} {y} {clr}", file=f)
             print(self.__grid, file=f)
             print(file=f)
