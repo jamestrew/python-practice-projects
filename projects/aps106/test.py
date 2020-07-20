@@ -1,35 +1,10 @@
-from board import Board
+xdim = 8
+ydim = 8
+size = xdim * ydim
 
-"""
-1. Ask user for board
-    - randomly generation (x, y inputs)
-    - read from file
+index = 61
 
-        --> if read from file: ask size
-
-2. Play mode
-    - interactive play
-    - computer play
-
-PLAY
-"""
-
-# step: board generation based on user input
-
-# if random generation:
-# n, m = map(int, input("Enter board dimensions (eg. 3x4 = 3 4): ").split())
-
-fname = "Grid/SmallGrid.txt"
-with open(fname) as f:
-    rows = f.readlines()
-
-dim = tuple(map(int, rows[0].split()))
-content = [letter for row in rows[1:] for letter in row.strip()]
-
-grid = Board(dim, content)
-print(grid)
-print()
-
-grid.kill(7, 0)
-print(grid)
-print()
+for i in range(ydim):
+    col_clr = []
+    col_indices = [k + i for k in range(size) if k % ydim == 0]
+    print(col_indices)

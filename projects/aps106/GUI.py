@@ -129,7 +129,12 @@ class Game(tk.Frame):
         score_frame.grid(row=0, column=0, sticky='nsew')
 
         score_header = tk.Label(score_frame, text="SCORE:", font=FONTS[30])
+        self.score_label = tk.Label(score_frame, text=0, font=FONTS[25])
         score_header.pack()
+        self.score_label.pack()
+
+        replay = tk.Button(score_frame, text="REPLAY", font=FONTS[20], command=self.replay)
+        replay.pack()
 
         self.xdim, self.ydim = self.controller.grid_dim()
         self.cell_dim = min(WIDTH // self.xdim, HEIGHT // self.ydim)
@@ -147,6 +152,16 @@ class Game(tk.Frame):
 
         self.play_game()
 
+    def replay(self):
+        self.board = self.controller.init_grid(self.__grid_val)
+        # Refresh board
+        for i in range(self.xdim):
+            for j in range(self.ydim):
+                cell_clr = self.check_clr(i, j)
+                self.cells[i][j]["frame"].config(bg=cell_clr)
+
+        self.score_label.config(text=self.__score)  # Refresh score
+
     def check_clr(self, i, j):
         if self.board[i, j] == 'r':
             return RED
@@ -162,23 +177,30 @@ class Game(tk.Frame):
     def play_game(self):
         self.master.bind("<Button-1>", self.kill_cell)
         self.__selection = None
+        self.__score = None
 
     def kill_cell(self, event):
         ''' Get select widget, kill selected cell '''
-        widgetlen = len(str(event.widget))
-        if widgetlen < 20:
+
+        widget = str(event.widget)
+        print(widget, widget[:21])
+        if widget[:21] != ".!game.!frame3.!frame":
             return
 
-        cell_index = str(event.widget)[21:]
+        cell_index = widget[21:]
         if not cell_index:
             self.__selection = (0, 0)
         else:
             cell_index = int(cell_index) - 1
-            self.__selection = (cell_index // self.xdim, cell_index % self.ydim)
+            self.__selection = (cell_index // self.ydim, cell_index % self.ydim)
 
-        self.board = self.controller.update_cell(self.__selection)
+        self.__score = self.controller.update_cell(self.__selection)
 
+        # Update board
         for i in range(self.xdim):
             for j in range(self.ydim):
                 cell_clr = self.check_clr(i, j)
                 self.cells[i][j]["frame"].config(bg=cell_clr)
+
+        # Update score
+        self.score_label.config(text=self.__score)

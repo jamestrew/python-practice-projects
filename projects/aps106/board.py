@@ -2,6 +2,8 @@ import random
 
 class Board():
 
+    __total_score = 0
+
     def __init__(self, dim, grid=None):
         if type(dim) is not tuple:
             raise ValueError(
@@ -48,6 +50,9 @@ class Board():
 
     def isPossible(self, clr, checks):
         ''' returns list of possible kills'''
+        if clr == ' ':
+            return None
+
         kills = []
         for check in checks:
             if self.grid[check] == clr:
@@ -82,22 +87,30 @@ class Board():
             newIndex = kills.pop()
             kills.extend(self.isPossible(clr, self.neighbor(newIndex)))
 
-        print(score)
-        self.collapse()
+        self.__total_score += (score**2)
+        self.collapse(self.size - 1)
         self.shift()
-        print(self)
+        # self.gameOver()
 
-    def collapse(self):
+    def collapse(self, index):
         ''' Collapse columns with empty cells down'''
-        for i in range(self.size - 1, self.ydim - 1, -1):
-            # if current cell empty, fill it with cell above
-            if self.grid[i] == ' ':
-                self.grid[i] = self.grid[i - self.ydim]
-                self.grid[i - self.ydim] = ' '
+        if index == 0:
+            return
+        if index == index % self.ydim:
+            return self.collapse(index + (self.xdim - 1) * self.ydim - 1)
+        if self.grid[index] != ' ':
+            return self.collapse(index - self.ydim)
+
+        for i in range(index, index % self.ydim - 1, -self.ydim):
+            if self.grid[i] != ' ':
+                self.grid[index] = self.grid[i]
+                self.grid[i] = ' '
+                break
+        return self.collapse(index - self.ydim)
 
     def shift(self):
         ''' Shift columns over to the left into a empty column'''
-        for i in range(self.ydim - 1):
+        for i in range(self.ydim):
             col_clr = []
             col_indices = [k + i for k in range(self.size) if k % self.ydim == 0]
             for j in col_indices:
@@ -109,3 +122,7 @@ class Board():
                 for j in col_indices:
                     self.grid[j] = self.grid[j + 1]
                     self.grid[j + 1] = ' '
+
+    @property
+    def total_score(self):
+        return self.__total_score

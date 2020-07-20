@@ -27,10 +27,10 @@ class Controller:
             rows = f.readlines()
         self.__grid_dim = tuple(rows[0].split())
         content = [letter for row in rows[1:] for letter in row.strip()]
-
         self.__grid = Board(self.__grid_dim, content)
-        print(self.__grid.xdim, self.__grid.ydim)
-        print(self.__grid)
+
+        with open("move_log.txt", "w") as f:
+            print(self.__grid, end='\n\n', file=f)
         return self.__grid
 
     def grid_dim(self):
@@ -39,4 +39,11 @@ class Controller:
     def update_cell(self, dim):
         x, y = dim
         self.__grid.kill(x, y)
-        return self.__grid
+        self.log_moves(x, y)
+        return self.__grid.total_score
+
+    def log_moves(self, x, y):
+        with open("move_log.txt", "a") as f:
+            print(f"{x} {y} {self.__grid[x, y]}", file=f)
+            print(self.__grid, file=f)
+            print(file=f)
