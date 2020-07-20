@@ -40,9 +40,9 @@ class Controller:
         x, y = dim
         clr = self.__grid[x, y]
         print(x, y, clr)
-        self.__grid.kill(x, y)
+        game_over = self.__grid.kill(x, y)
         self.log_moves(x, y, clr)
-        return self.__grid.total_score
+        return (self.__grid.total_score, game_over)
 
     def log_moves(self, x, y, clr):
         with open("move_log.txt", "a") as f:

@@ -178,6 +178,7 @@ class Game(tk.Frame):
         self.master.bind("<Button-1>", self.kill_cell)
         self.__selection = None
         self.__score = None
+        self.__state = None
 
     def kill_cell(self, event):
         ''' Get select widget, kill selected cell '''
@@ -193,7 +194,7 @@ class Game(tk.Frame):
             cell_index = int(cell_index) - 1
             self.__selection = (cell_index // self.ydim, cell_index % self.ydim)
 
-        self.__score = self.controller.update_cell(self.__selection)
+        self.__score, self.__state = self.controller.update_cell(self.__selection)
 
         # Update board
         for i in range(self.xdim):
@@ -203,3 +204,9 @@ class Game(tk.Frame):
 
         # Update score
         self.score_label.config(text=self.__score)
+
+        if not self.__state:
+            self.game_over()
+
+    def game_over(self):
+        pass

@@ -1,4 +1,7 @@
 import random
+import sys
+
+sys.setrecursionlimit(1500)
 
 class Board():
 
@@ -62,6 +65,8 @@ class Board():
     def gameOver(self):
         checks = 0
         for i in self.size:
+            if self.grid[i] == '':
+                continue
             if self.isPossible(i):
                 checks += 1
         if checks == 0:  # no possible moves remaining
@@ -90,7 +95,7 @@ class Board():
         self.__total_score += (score**2)
         self.collapse(self.size - 1)
         self.shift()
-        # self.gameOver()
+        return self.gameOver()
 
     def collapse(self, index):
         ''' Collapse columns with empty cells down'''
