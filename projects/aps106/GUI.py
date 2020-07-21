@@ -106,11 +106,21 @@ class Game(tk.Frame):
 
         # Play button
         play_button = tk.Button(self.menu_frame, text='PLAY', bg=WHITE, fg=BLACK,
-                                font=FONTS[25],
-                                command=start_game
+                                font=FONTS[25], command=start_game
                                 )
         play_button.config(state="disabled")
         play_button.grid(row=3, column=2, padx=5, pady=5)
+
+        # Help
+        def help_game():
+            top = tk.Toplevel()
+            top.title("About Check Out Line")
+            msg = tk.Message(top, text=HELP_TEXT).pack()
+
+        help_button = tk.Button(self.menu_frame, text='HELP', bg=WHITE, fg=BLACK,
+                                font=FONTS[25], command=help_game
+                                )
+        help_button.grid(row=4, column=2, padx=5, pady=5)
 
     def init_game(self):
         """
