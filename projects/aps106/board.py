@@ -64,10 +64,10 @@ class Board():
 
     def gameOver(self):
         checks = 0
-        for i in self.size:
+        for i in range(self.size):
             if self.grid[i] == '':
                 continue
-            if self.isPossible(i):
+            if self.isPossible(self.grid[i], self.neighbor(i)):
                 checks += 1
         if checks == 0:  # no possible moves remaining
             return True
@@ -79,7 +79,6 @@ class Board():
         clr = self.grid[index]
         kills = self.isPossible(clr, self.neighbor(index))
         if not kills:
-            print("Move not possible")
             return
 
         self.grid[index] = ' '

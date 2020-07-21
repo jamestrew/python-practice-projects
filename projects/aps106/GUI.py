@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from resource import *
 
 
@@ -6,8 +7,6 @@ class Game(tk.Frame):
 
     __mode = None
     __grid_val = None
-    __row_size = None
-    __col_size = None
 
     def __init__(self, controller):
         super().__init__()
@@ -125,15 +124,15 @@ class Game(tk.Frame):
         self.game_frame = tk.Frame(self, bg=BACK, width=WIDTH, height=HEIGHT, bd=5)
         self.game_frame.grid(row=0, column=1, stick='nsew')
         self.game_frame.grid_propagate(False)
-        score_frame = tk.Frame(self, bg=BACK, bd=5)
-        score_frame.grid(row=0, column=0, sticky='nsew')
+        self.score_frame = tk.Frame(self, bg=BACK, bd=5)
+        self.score_frame.grid(row=0, column=0, sticky='nsew')
 
-        score_header = tk.Label(score_frame, text="SCORE:", font=FONTS[30])
-        self.score_label = tk.Label(score_frame, text=0, font=FONTS[25])
+        score_header = tk.Label(self.score_frame, text="SCORE:", bg=BACK, font=FONTS[30])
+        self.score_label = tk.Label(self.score_frame, text=0, bg=BACK, font=FONTS[25])
         score_header.pack()
         self.score_label.pack()
 
-        replay = tk.Button(score_frame, text="REPLAY", font=FONTS[20], command=self.replay)
+        replay = tk.Button(self.score_frame, text="REPLAY", font=FONTS[20], command=self.replay)
         replay.pack()
 
         self.xdim, self.ydim = self.controller.grid_dim()
@@ -144,23 +143,16 @@ class Game(tk.Frame):
             row = []
             for j in range(self.ydim):
                 cell_clr = self.check_clr(i, j)
-                cell_frame = tk.Frame(self.game_frame, width=self.cell_dim, height=self.cell_dim, bg=cell_clr)
+                cell_frame = tk.Frame(self.game_frame,
+                                      width=self.cell_dim, height=self.cell_dim,
+                                      bg=cell_clr
+                                      )
                 cell_frame.grid(row=i, column=j)
                 cell_data = {"frame": cell_frame}
                 row.append(cell_data)
             self.cells.append(row)
 
         self.play_game()
-
-    def replay(self):
-        self.board = self.controller.init_grid(self.__grid_val)
-        # Refresh board
-        for i in range(self.xdim):
-            for j in range(self.ydim):
-                cell_clr = self.check_clr(i, j)
-                self.cells[i][j]["frame"].config(bg=cell_clr)
-
-        self.score_label.config(text=self.__score)  # Refresh score
 
     def check_clr(self, i, j):
         if self.board[i, j] == 'r':
@@ -196,6 +188,11 @@ class Game(tk.Frame):
 
         self.__score, self.__state = self.controller.update_cell(self.__selection)
 
+        self.update_board()
+        if self.__state:
+            self.game_over()
+
+    def update_board(self):
         # Update board
         for i in range(self.xdim):
             for j in range(self.ydim):
@@ -205,8 +202,10 @@ class Game(tk.Frame):
         # Update score
         self.score_label.config(text=self.__score)
 
-        if not self.__state:
-            self.game_over()
+    def replay(self):
+        self.board = self.controller.init_grid(self.__grid_val)
+        self.__score = 0
+        self.update_board()
 
     def game_over(self):
-        pass
+        messagebox.showinfo(title="Check Out Line", message="GAME OVER")
