@@ -36,12 +36,17 @@ class Controller:
     def grid_dim(self):
         return (self.__grid.xdim, self.__grid.ydim)
 
-    def update_cell(self, dim):
-        x, y = dim
-        clr = self.__grid[x, y]
-        game_over = self.__grid.kill(x, y)
+    def update_cell(self, dim=None):
+        if dim is not None:
+            x, y = dim
+            clr = self.__grid[x, y]
+            self.__grid.kill(x, y)
+        else:
+            # Call auto kill function in puzzle which returns x, y, clr
+            x, y, clr = self.__grid.auto_kill()
+
         self.log_moves(x, y, clr)
-        return (self.__grid.total_score, game_over)
+        return (self.__grid.total_score, self.__grid.game_over)
 
     def log_moves(self, x, y, clr):
         with open("move_log.txt", "a") as f:

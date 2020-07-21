@@ -167,10 +167,21 @@ class Game(tk.Frame):
             return WHITE
 
     def play_game(self):
-        self.master.bind("<Button-1>", self.kill_cell)
-        self.__selection = None
         self.__score = None
         self.__state = None
+
+        if self.__mode == 1:
+            self.master.bind("<space>", self.next_move)
+        else:
+            self.master.bind("<Button-1>", self.kill_cell)
+            self.__selection = None
+
+    def next_move(self, event):
+        """ Plays the next move of computer play """
+        self.__score, self.__state = self.controller.update_cell()
+        self.update_board()
+        if self.__state:
+            self.game_over()
 
     def kill_cell(self, event):
         ''' Get select widget, kill selected cell '''
