@@ -18,9 +18,9 @@ class Controller:
         if grid_val == 1:
             fname = os.path.join("Grid", "SmallGrid.txt")
         elif grid_val == 2:
-            fname = os.path.join("Grid", "MediumGrid.txt")  # temporary for testing
+            fname = os.path.join("Grid", "MediumGrid.txt")
         else:
-            fname = os.path.join("Grid", "LargeGrid.txt")  # temporary for testing
+            fname = os.path.join("Grid", "LargeGrid.txt")
         print(f"[DEBUG]: File selected {fname}")
 
         with open(fname) as f:
