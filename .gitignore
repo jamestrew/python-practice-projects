@@ -20,3 +20,5 @@ $RECYCLE.BIN/
 /__pycache__
 *.py[cod]
 *$py.class
+/data analysis/data
+
