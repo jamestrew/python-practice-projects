@@ -101,9 +101,11 @@ def main():
                 row = (location[1] // SQ_SIZE)
                 if game.board[row][col] != '--' and select_pos is None:
                     select_pos = (row, col)
+                    move = Move(select_pos, game.board)
                 elif select_pos is not None:  # second click
-                    move = Move(select_pos, (row, col), game.board)
-                    print(move.piece_moved, move.piece_capt)
+                    move.move_row = row
+                    move.move_col = col
+                    game.make_move(move)
                     select_pos = None
 
         draw_game(screen, game)

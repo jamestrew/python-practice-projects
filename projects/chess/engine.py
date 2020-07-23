@@ -70,7 +70,7 @@ class Board():
     def make_move(self, move):
         self.board[move.select_row][move.select_col] = '--'
         self.board[move.move_row][move.move_col] = move.piece_moved
-        self.white_to_move = not white_to_move
+        self.white_to_move = not self.white_to_move
 
     def __str__(self):
         return str(self.board)
@@ -88,11 +88,11 @@ class Move():
         4: 4, 5: 3, 6: 2, 7: 1
     }
 
-    def __init__(self, select_pos, move_pos, board):
+    def __init__(self, select_pos, board):
         self.select_row = select_pos[0]
         self.select_col = select_pos[1]
-        self.move_row = move_pos[0]
-        self.move_col = move_pos[1]
+        self.move_row = None
+        self.move_col = None
         self.piece_moved = board[self.select_row][self.select_col]
         self.piece_capt = board[self.move_row][self.move_col]
 
