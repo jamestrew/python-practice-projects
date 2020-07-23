@@ -1,5 +1,5 @@
 import pygame as pg
-from board import Board
+from engine import Board, Move
 import os
 from resources import *
 
@@ -24,7 +24,63 @@ def load_images():
         IMAGES['w' + piece] = pg.transform.scale(img, (SQ_SIZE, SQ_SIZE))
 
 
+def draw_board(screen):
+    """ Draw the back board grid """
+
+    # Background border
+    pg.draw.rect(screen, pg.Color(BORDER),
+                 (0, 0, B_WIDTH + 2 * BORD, B_HEIGHT + 2 * BORD)
+                 )
+
+    for x in range(BORD, B_WIDTH, SQ_SIZE):
+        for y in range(BORD, B_HEIGHT, SQ_SIZE):
+            if x % 200 == BORD and y % 200 == BORD or \
+                    x % 200 != BORD and y % 200 != BORD:
+                pg.draw.rect(screen, pg.Color(LIGHT_GRID),
+                             (x, y, SQ_SIZE, SQ_SIZE)
+                             )
+            else:
+                pg.draw.rect(screen, pg.Color(DARK_GRID),
+                             (x, y, SQ_SIZE, SQ_SIZE)
+                             )
+
+
+def draw_pos_moves(screen, board, selection):
+    """ Draw all possible moves, incl takes/castle etc"""
+    pass
+
+
+def draw_pieces(screen, board):
+    """
+    Draw the moving of pieces.
+    Likely requires the refreshing of draws
+    """
+    for row, x in enumerate(range(BORD, B_WIDTH, SQ_SIZE)):
+        for col, y in enumerate(range(BORD, B_HEIGHT, SQ_SIZE)):
+            piece = board[row][col]
+            if piece != '--':
+                screen.blit(IMAGES[piece], pg.Rect(y, x, SQ_SIZE, SQ_SIZE))
+
+    # draw_last_move(screen, game)  # for future
+
+
+def draw_last_move(screen, game):
+    """
+    Draw color indicating last played move.
+    """
+    pass
+
+
+def draw_game(screen, game):
+    draw_board(screen)
+    # draw_pos_moves(screen, game.board, selection)  # for future
+    draw_pieces(screen, game.board)
+
+
 def main():
+    """
+    Handles user inputs and graphics updates
+    """
     screen = pg.display.set_mode((WIDTH, HEIGHT))
     clock = pg.time.Clock()
     screen.fill(pg.Color(BACKGROUND))
@@ -32,14 +88,27 @@ def main():
     game = Board()
     load_images()
 
+    select_pos = None
+
     running = True
     while running:
-
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 running = False
-            clock.tick(MAX_FPS)
-            pg.display.flip()
+            if event.type == pg.MOUSEBUTTONDOWN:
+                location = pg.mouse.get_pos()
+                col = (location[0] // SQ_SIZE)
+                row = (location[1] // SQ_SIZE)
+                if game.board[row][col] != '--' and select_pos is None:
+                    select_pos = (row, col)
+                elif select_pos is not None:  # second click
+                    move = Move(select_pos, (row, col), game.board)
+                    print(move.piece_moved, move.piece_capt)
+                    select_pos = None
+
+        draw_game(screen, game)
+        clock.tick(MAX_FPS)
+        pg.display.flip()
 
 
 if __name__ == '__main__':
