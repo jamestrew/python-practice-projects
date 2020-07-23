@@ -2,20 +2,38 @@
 class Piece():
     """ color, name"""
 
-    def __init__(self, name, position, white=True, alive=True):
-        self.name = name
+    def __init__(self, position, color, alive=True):
         self.position = position
+        self.color = color
         self.alive = alive
-        self.white = white
 
 
 class Pawn(Piece):
 
-    def __init__(self, name, position, white=True, alive=True):
-        super().__init__(name, position, white, alive)
+    def __repr__(self):
+        return self.color + 'p'
 
 
-bp1 = Pawn("bp1", "E9", white=False)
-print(bp1.white)
-print(bp1.name)
-print(bp1.position)
+class Rook(Piece):
+    def __repr__(self):
+        return self.color + 'r'
+
+
+class Knight(Piece):
+    def __repr__(self):
+        return self.color + 'n'
+
+
+class Bishop(Piece):
+    def __repr__(self):
+        return self.color + 'b'
+
+
+class Queen(Piece):
+    def __repr__(self):
+        return self.color + 'q'
+
+
+class King(Piece):
+    def __repr__(self):
+        return self.color + 'k'
