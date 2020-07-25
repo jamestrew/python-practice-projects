@@ -2,38 +2,89 @@
 class Piece():
     """ color, name"""
 
-    def __init__(self, position, color, alive=True):
-        self.position = position
-        self.color = color
-        self.alive = alive
+    def __init__(self, position, color):
+        self.row = position[0]
+        self.col = position[1]
+        self._color = color
+
+        unit_type = self.__class__.__name__
+        if unit_type != "Knight":
+            self._unit = unit_type[0].lower()
+        else:
+            self._unit = 'n'
+
+        self._name = self._color + self._unit
+
+    @property
+    def unit_type(self):
+        return self._unit
+
+    @property
+    def color(self):
+        return self._color
+
+    @property
+    def name(self):
+        return self._name
 
 
 class Pawn(Piece):
 
-    def __repr__(self):
+    def __init__(self, position, color):
+        super().__init__(position, color)
+        self.first_move = True
+
+    def get_moves(self, board):
+        """ returns a list(tuples) of all valid moves"""
+
+        # currently ignores diagonal take move and en passant
+        moves = []
+        if self.color == 'w':
+            moves.append((self.row - 1, self.col))
+            if self.first_move:
+                moves.append((self.row - 2, self.col))
+        else:
+            moves.append((self.row + 1, self.col))
+            if self.first_move:
+                moves.append((self.row + 2, self.col))
+
+        self.first_move = False
+
+        return moves
+
+    def __str__(self):
         return self.color + 'p'
 
 
 class Rook(Piece):
-    def __repr__(self):
+    def __str__(self):
         return self.color + 'r'
 
 
 class Knight(Piece):
-    def __repr__(self):
+    def __str__(self):
         return self.color + 'n'
 
 
 class Bishop(Piece):
-    def __repr__(self):
+    def __str__(self):
         return self.color + 'b'
 
 
 class Queen(Piece):
-    def __repr__(self):
+    def __str__(self):
         return self.color + 'q'
 
 
 class King(Piece):
-    def __repr__(self):
+    def __str__(self):
         return self.color + 'k'
+
+
+class Null:
+    def __init__(self):
+        self._name = '--'
+
+    @property
+    def name(self):
+        return self._name
