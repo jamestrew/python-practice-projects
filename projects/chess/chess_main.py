@@ -1,5 +1,4 @@
 import pygame as pg
-import pygame.gfxdraw as gfxdraw
 from engine import Board, Move
 import os
 from resources import *

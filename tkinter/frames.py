@@ -12,21 +12,25 @@ r.set('1')
 
 
 def clicked():
-    status = Label(root, text="Option " + str(r.get()) + " Selected",
-                   bd=1, relief=SUNKEN,
-                   padx=5, pady=5,
-                   anchor=E
-                   )
-    status.grid(row=1, column=0, sticky=W + E)
+  status = Label(root, text="Option " + str(r.get()) + " Selected",
+                 bd=1, relief=SUNKEN,
+                 padx=5, pady=5,
+                 anchor=E
+                 )
+  status.grid(row=1, column=0, sticky=W + E)
 
 
 def popup():
-    response = messagebox.askyesno("This is my popup", "hello world")
-    if response == 1:
-        Label(frame, text="Yes").pack()
-    else:
-        Label(frame, text="No").pack()
+  response = messagebox.askyesno("This is my popup", "hello world")
+  if response == 1:
+    Label(frame, text="Yes").pack()
+  else:
+    Label(frame, text="No").pack()
 
+
+def hoverstyle_toggle(event):
+  print(event.widget)
+  print(str(event))
 
 
 # Elements
@@ -34,6 +38,9 @@ Radiobutton(frame, text="Option 1", variable=r, value=1, command=clicked).pack()
 Radiobutton(frame, text="Option 2", variable=r, value=2, command=clicked).pack()
 
 b = Button(frame, text="Popup", command=popup)
+print(f"WINFO_ID: {b.winfo_id()}")
+b.bind("<Enter>", hoverstyle_toggle)
+b.bind("<Leave>", hoverstyle_toggle)
 
 
 # Display elements

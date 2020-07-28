@@ -107,9 +107,6 @@ class Move():
         own king being checked
         """
 
-        if move_pos == (self.select_row, self.select_col):
-            return
-
         # Check it's the right color's turn
         turn = 'w' if self.ctrl.white_to_move else 'b'
         if self.piece_moved.color != turn:  # not the color's turn
