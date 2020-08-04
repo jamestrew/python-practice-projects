@@ -60,6 +60,13 @@ class Snake():
         self.body.insert(0, self.head)
         self.display(body=self.head)
 
+    def change_direction(self, dir):
+        # restrict moving in the opposite direction to current direction
+        if self.vx == -dir[0] or self.vy == -dir[1]:
+            return
+        self.vx = dir[0]
+        self.vy = dir[1]
+
     def check_eat(self, foodx, foody):
         if self.x + F_RADIUS == foodx and self.y + F_RADIUS == foody:
             return True

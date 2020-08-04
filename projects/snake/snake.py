@@ -23,17 +23,13 @@ while running:
 
     keys = pg.key.get_pressed()
     if keys[pg.K_RIGHT]:
-        snake.vx = 1
-        snake.vy = 0
-    if keys[pg.K_LEFT]:
-        snake.vx = -1
-        snake.vy = 0
-    if keys[pg.K_UP]:
-        snake.vx = 0
-        snake.vy = -1
-    if keys[pg.K_DOWN]:
-        snake.vx = 0
-        snake.vy = 1
+        snake.change_direction(RIGHT)
+    elif keys[pg.K_LEFT]:
+        snake.change_direction(LEFT)
+    elif keys[pg.K_UP]:
+        snake.change_direction(UP)
+    elif keys[pg.K_DOWN]:
+        snake.change_direction(DOWN)
 
     snake.move_snake()
     if snake.check_eat(food.x, food.y):
