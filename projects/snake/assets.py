@@ -15,7 +15,7 @@ class Food():
         self.x = randint(F_RADIUS, WIDTH - F_RADIUS) // S_THICK * S_THICK + F_RADIUS
         self.y = randint(F_RADIUS, HEIGHT - F_RADIUS) // S_THICK * S_THICK + F_RADIUS
 
-        while (self.x, self.y) in snake:
+        while (self.x - F_RADIUS, self.y - F_RADIUS) in snake:
             self.x = randint(F_RADIUS, WIDTH - F_RADIUS) // S_THICK * S_THICK + F_RADIUS
             self.y = randint(F_RADIUS, HEIGHT - F_RADIUS) // S_THICK * S_THICK + F_RADIUS
         print(self.x, self.y)
@@ -27,6 +27,8 @@ class Food():
 
 class Snake():
 
+    init_length = 10
+
     def __init__(self, x, y, pg, screen):
         self.x = x
         self.y = y
@@ -35,11 +37,13 @@ class Snake():
         self.head = (self.x, self.y)
         self.vx = 1
         self.vy = 0
-        self.body = [
-            (self.x, self.y),
-            (self.x - self.vx * S_THICK, self.y),
-            (self.x - 2 * (self.vx * S_THICK), self.y)
-        ]
+        self.body = [self.head]
+
+        for i in range(1, self.init_length):
+            x = self.x - (i * S_THICK * self.vx)
+            y = self.y - (i * S_THICK * self.vy)
+            self.body.append((x, y))
+        print(self.body)
 
     def display(self, color='white', body=None):
         if body is None:
@@ -85,5 +89,6 @@ class Snake():
                 self.y < 0 or self.y + S_THICK > HEIGHT or \
                 self.head in self.body[1:]:
             print("GAME OVER")
+            print("SCORE:", len(self.body))
             return False
         return True
