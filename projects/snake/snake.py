@@ -1,5 +1,4 @@
 import pygame as pg
-import random
 from assets import Food, Snake
 from constants import *
 from grid import Grid
@@ -42,6 +41,7 @@ while running:
         snake.eat()
         food.new(snake.body)
 
+    running = snake.check_game_over()
     grid.display()
     clock.tick(FPS)
     pg.display.flip()

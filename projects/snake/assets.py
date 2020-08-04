@@ -69,7 +69,8 @@ class Snake():
 
     def check_game_over(self):
         # need to take into account the thickness of body
-        if self.x < 0 or self.x > WIDTH:
-            pass
-        if self.y < 0 or self.y > HEIGHT:
-            pass
+        if self.x < 0 or self.x + S_THICK > WIDTH or \
+                self.y < 0 or self.y + S_THICK > HEIGHT:
+            print("GAME OVER")
+            return False
+        return True
