@@ -11,8 +11,13 @@ class Food():
         self.screen = screen
 
     def new(self, snake):
+
         self.x = randint(F_RADIUS, WIDTH - F_RADIUS) // S_THICK * S_THICK + F_RADIUS
         self.y = randint(F_RADIUS, HEIGHT - F_RADIUS) // S_THICK * S_THICK + F_RADIUS
+
+        while (self.x, self.y) in snake:
+            self.x = randint(F_RADIUS, WIDTH - F_RADIUS) // S_THICK * S_THICK + F_RADIUS
+            self.y = randint(F_RADIUS, HEIGHT - F_RADIUS) // S_THICK * S_THICK + F_RADIUS
         print(self.x, self.y)
         self.display('white')
 
