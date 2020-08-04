@@ -18,7 +18,6 @@ class Food():
         while (self.x - F_RADIUS, self.y - F_RADIUS) in snake:
             self.x = randint(F_RADIUS, WIDTH - F_RADIUS) // S_THICK * S_THICK + F_RADIUS
             self.y = randint(F_RADIUS, HEIGHT - F_RADIUS) // S_THICK * S_THICK + F_RADIUS
-        print(self.x, self.y)
         self.display('white')
 
     def display(self, color):
@@ -62,6 +61,9 @@ class Snake():
                           )
 
     def move_snake(self):
+        if self.vx == 0 and self.vy == 0:
+            return
+
         self.display(color='black', body=self.body.pop())
         self.x += self.vx * S_THICK
         self.y += self.vy * S_THICK
@@ -83,12 +85,10 @@ class Snake():
     def eat(self):
         self.body.append(self.body[-1])
 
-    def check_game_over(self):
+    def game_over(self):
         # need to take into account the thickness of body
         if self.x < 0 or self.x + S_THICK > WIDTH or \
                 self.y < 0 or self.y + S_THICK > HEIGHT or \
                 self.head in self.body[1:]:
-            print("GAME OVER")
-            print("SCORE:", len(self.body))
-            return False
-        return True
+            self.vx, self.vy = (0, 0)
+            return True

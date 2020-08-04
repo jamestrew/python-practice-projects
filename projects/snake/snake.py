@@ -4,15 +4,20 @@ from constants import *
 from grid import Grid
 
 pg.init()
+pg.font.init()
+pg.display.set_caption("sssssssssSSNAKE")
 screen = pg.display.set_mode((WIDTH, HEIGHT))
 
 
-grid = Grid(screen, WIDTH, HEIGHT, S_THICK, "white")
+# grid = Grid(screen, WIDTH, HEIGHT, S_THICK, "white")
 snake = Snake(START_X, START_Y, pg, screen)
 snake.display()
 food = Food(pg, screen)
 food.new(snake.body)
 
+
+lost_font = pg.font.SysFont("comic sans", 150)
+score_font = pg.font.SysFont("comic sans", 100)
 clock = pg.time.Clock()
 running = True
 while running:
@@ -33,12 +38,15 @@ while running:
 
     snake.move_snake()
     if snake.check_eat(food.x, food.y):
-        print("[DEBUG] SNAKE ATE")
         snake.eat()
         food.new(snake.body)
 
-    running = snake.check_game_over()
-    grid.display()
+    # grid.display()
+    if snake.game_over():
+        lost_label = lost_font.render("GAME OVER", 1, pg.Color("red"))
+        score_label = score_font.render(f"SCORE: {len(snake.body) - snake.init_length}", 1, pg.Color("red"))
+        screen.blit(lost_label, (WIDTH // 2 - lost_label.get_width() // 2, 400))
+        screen.blit(score_label, (WIDTH // 2 - score_label.get_width() // 2, 500))
     clock.tick(FPS)
     pg.display.flip()
 
