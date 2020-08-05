@@ -42,7 +42,6 @@ class Snake():
             x = self.x - (i * S_THICK * self.vx)
             y = self.y - (i * S_THICK * self.vy)
             self.body.append((x, y))
-        print(self.body)
 
     def display(self, color='white', body=None):
         if body is None:

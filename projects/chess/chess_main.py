@@ -47,7 +47,6 @@ def draw_board(screen):
                     (x + (SQ_SIZE // 2) - (file_label.get_width() // 2), 810))
 
         for col, y in enumerate(range(BORD, B_HEIGHT, SQ_SIZE)):
-
             # rank label
             if row == 0:  # ensures rank labels only draws onces
                 rank_label = label_font.render(f"{rank_list[col]}",
