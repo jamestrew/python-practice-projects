@@ -82,6 +82,8 @@ class King(Piece):
 
 
 class Null:
+    """ Represents empty spaces on the chess board """
+
     def __init__(self):
         self._name = '--'
 

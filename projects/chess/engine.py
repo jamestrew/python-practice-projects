@@ -22,7 +22,6 @@ class Board():
         self.moves = []  # log of moves
 
         self.board = np.full((DIM, DIM), Null(), dtype=object)
-        # self.board = [['--'] * DIM for _ in range(DIM)]
 
         self.board[0][0] = Rook((0, 0), self.opponent)
         self.board[0][1] = Knight((0, 1), self.opponent)
@@ -72,6 +71,8 @@ class Board():
     def make_move(self, move):
         self.board[move.select_row][move.select_col] = Null()
         self.board[move.move_row][move.move_col] = move.piece_moved
+        move.piece_moved.row = move.move_row
+        move.piece_moved.col = move.move_col
         self.moves.append(move)
         print(f"[DEBUG]: {self.moves[-1]}")
         self.white_to_move = not self.white_to_move
@@ -92,12 +93,12 @@ class Move():
         4: 4, 5: 3, 6: 2, 7: 1
     }
 
-    def __init__(self, select_pos, ctrl):
-        self.ctrl = ctrl  # game instance
+    def __init__(self, select_pos, game):
+        self.game = game  # game instance
         self.select_row = select_pos[0]
         self.select_col = select_pos[1]
-        self.piece_moved = self.ctrl.board[self.select_row][self.select_col]
-        self._moves = self.piece_moved.get_moves(self.ctrl.board)
+        self.piece_moved = self.game.board[self.select_row][self.select_col]
+        self._moves = self.piece_moved.get_moves(self.game.board)
         self.debug("init")  # TEMP - debug
 
     def complete_move(self, move_pos):
@@ -108,7 +109,7 @@ class Move():
         """
 
         # Check it's the right color's turn
-        turn = 'w' if self.ctrl.white_to_move else 'b'
+        turn = 'w' if self.game.white_to_move else 'b'
         if self.piece_moved.color != turn:  # not the color's turn
             self.debug("turn")
             return
@@ -119,8 +120,8 @@ class Move():
 
         self.move_row = move_pos[0]
         self.move_col = move_pos[1]
-        self.piece_capt = self.ctrl.board[self.move_row][self.move_col]
-        self.ctrl.make_move(self)  # makes the changes on the board
+        self.piece_capt = self.game.board[self.move_row][self.move_col]
+        self.game.make_move(self)  # makes the changes on the board
 
     def __repr__(self):
         piece_name = self.piece_moved.unit_type
@@ -138,13 +139,19 @@ class Move():
         return self._moves
 
     def debug(self, debug_type):
-        pass
-        # if debug_type == "init":
-        #     print(self.get_rank_file(self.piece_moved.row, self.piece_moved.col))
-        #     for r, c in self._moves:
-        #         print(f"({self.get_rank_file(r, c)})", end=' ')
-        #     print()
-        # elif debug_type == "turn":
-        #     print("Not your turn")
-        # elif debug_type == "invalid":
-        #     print("Invalid move")
+        if debug_type == "init":
+            print("SELECTED: ", self.get_rank_file(self.piece_moved.row,
+                                                   self.piece_moved.col))
+            print("MOVES: ", end='')
+            for r, c in self._moves:
+                print(f"({self.get_rank_file(r, c)})", end=' ')
+            print()
+        elif debug_type == "turn":
+            print("Not your turn")
+        elif debug_type == "invalid":
+            print("Invalid move")
+
+
+if __name__ == '__main__':
+    game = Board()
+    print(game)
