@@ -143,8 +143,11 @@ class Move():
             print("SELECTED: ", self.get_rank_file(self.piece_moved.row,
                                                    self.piece_moved.col))
             print("MOVES: ", end='')
-            for r, c in self._moves:
-                print(f"({self.get_rank_file(r, c)})", end=' ')
+            if self._moves is not None:
+                for r, c in self._moves:
+                    print(f"({self.get_rank_file(r, c)})", end=' ')
+            else:
+                print("No moves")
             print()
         elif debug_type == "turn":
             print("Not your turn")
@@ -154,4 +157,4 @@ class Move():
 
 if __name__ == '__main__':
     game = Board()
-    print(game)
+    print(game.board[5][5])

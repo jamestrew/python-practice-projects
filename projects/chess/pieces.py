@@ -37,16 +37,17 @@ class Pawn(Piece):
     def get_moves(self, board):
         """ returns a list(tuples) of all valid moves"""
 
-        # currently ignores diagonal take move and en passant
+        # Currently ignores diagonal take move and en passant
+        # and ignores impeding pieces
         moves = []
-        if self.color == 'w':
-            moves.append((self.row - 1, self.col))
-            if self.first_move:
-                moves.append((self.row - 2, self.col))
-        else:
-            moves.append((self.row + 1, self.col))
-            if self.first_move:
-                moves.append((self.row + 2, self.col))
+        fwd = -1 if self.color == 'w' else 1
+
+        if not isinstance(board[self.row + fwd][self.col], Null):
+            return
+
+        moves.append((self.row + fwd, self.col))
+        if self.first_move:
+            moves.append((self.row + 2 * fwd, self.col))
 
         self.first_move = False
 

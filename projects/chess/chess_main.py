@@ -1,6 +1,8 @@
-import pygame as pg
-from engine import Board, Move
 import os
+
+import pygame as pg
+
+from engine import Board, Move
 from resources import *
 
 pg.init()
@@ -144,7 +146,7 @@ def main():
                     select_pos = None
 
         draw_game(screen, game)
-        if select_pos is not None:
+        if select_pos is not None and suggestions is not None:
             draw_move_suggestions(screen, suggestions)
         clock.tick(MAX_FPS)
         pg.display.flip()
