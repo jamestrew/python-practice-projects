@@ -1,6 +1,6 @@
 import pygame
-from vars import *
-from objects import *
+from projects.pong.vars import *
+from projects.pong.objects import *
 
 # Draw scenario
 pygame.init()

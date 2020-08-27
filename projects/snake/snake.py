@@ -1,7 +1,9 @@
 import pygame as pg
-from assets import Food, Snake
-from constants import *
-from grid import Grid
+
+from projects.snake.assets import Food, Snake
+from projects.snake.constants import *
+
+# from projects.snake.grid import Grid
 
 pg.init()
 pg.font.init()

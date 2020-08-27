@@ -2,8 +2,8 @@ import os
 
 import pygame as pg
 
-from engine import Board, Move
-from resources import *
+from projects.chess.engine import Board, Move
+from projects.chess.resources import *
 
 pg.init()
 pg.font.init()
